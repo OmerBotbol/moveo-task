@@ -1,14 +1,21 @@
+import { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MainPage from './components/MainPage';
 import UserPage from './components/UserPage';
 
 function App() {
+  const [user, setUser] = useState();
+
   return (
     <div>
       <Router>
         <Switch>
-          <Route exact path="/" component={MainPage} />
-          <Route path="/" component={UserPage} />
+          <Route exact path="/">
+            <MainPage setUser={setUser} />
+          </Route>
+          <Route path="/:username">
+            <UserPage user={user} />
+          </Route>
         </Switch>
       </Router>
     </div>

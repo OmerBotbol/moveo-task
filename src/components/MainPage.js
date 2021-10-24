@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router';
 
-function MainPage() {
+function MainPage({ setUser }) {
   const [users, setUsers] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     axios
@@ -12,6 +14,15 @@ function MainPage() {
         setUsers(result.data.results);
       });
   }, [pageNumber]);
+
+  const handleClick = (userToSet) => {
+    setUsername(userToSet.login.username);
+    setUser(userToSet);
+  };
+
+  if (username) {
+    return <Redirect to={`/${username}`} />;
+  }
 
   return (
     <div>
@@ -27,7 +38,7 @@ function MainPage() {
           </tr>
           {users?.map((user, key) => {
             return (
-              <tr key={key}>
+              <tr key={key} onClick={() => handleClick(user)}>
                 <td>
                   <img src={user.picture.thumbnail} alt="profile"></img>
                 </td>
