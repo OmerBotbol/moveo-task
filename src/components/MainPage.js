@@ -36,13 +36,34 @@ function MainPage({ setUser }) {
     setPageNumber(newPage);
   };
 
+  const handleSort = (sortBy, another) => {
+    const usersCopy = [...users];
+    const sortedList = usersCopy.sort((a, b) => {
+      if (another) {
+        if (a[sortBy][another] > b[sortBy][another]) {
+          return 1;
+        }
+        return -1;
+      }
+      if (a[sortBy] > b[sortBy]) {
+        return 1;
+      }
+      return -1;
+    });
+    setUsers(sortedList);
+  };
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: '#123c69',
       color: theme.palette.common.white,
       fontSize: 16,
+      cursor: 'pointer',
       fontWeight: 'bold',
       fontFamily: "'Comfortaa', cursive;",
+      '&:hover': {
+        color: '#bab2b5',
+      },
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -70,10 +91,18 @@ function MainPage({ setUser }) {
           <TableHead>
             <TableRow>
               <StyledTableCell>Picture</StyledTableCell>
-              <StyledTableCell>Full Name</StyledTableCell>
-              <StyledTableCell>Email</StyledTableCell>
-              <StyledTableCell>Gender</StyledTableCell>
-              <StyledTableCell>Age</StyledTableCell>
+              <StyledTableCell onClick={() => handleSort('name', 'first')}>
+                Full Name
+              </StyledTableCell>
+              <StyledTableCell onClick={() => handleSort('email')}>
+                Email
+              </StyledTableCell>
+              <StyledTableCell onClick={() => handleSort('gender')}>
+                Gender
+              </StyledTableCell>
+              <StyledTableCell onClick={() => handleSort('dob', 'age')}>
+                Age
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
