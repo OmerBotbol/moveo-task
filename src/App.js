@@ -14,7 +14,7 @@ function App() {
             <MainPage setUser={setUser} />
           </Route>
           <Route path="/:username">
-            <UserPage user={user} />
+            <UserPage user={user} setUser={setUser} />
           </Route>
         </Switch>
       </Router>

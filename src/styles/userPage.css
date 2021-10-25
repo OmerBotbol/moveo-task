@@ -1,3 +1,50 @@
+.user-page {
+  background-color: #edc7b7;
+  height: 100vh;
+}
+
+.user-page-header {
+  margin: 0;
+  padding: 15px 0px;
+  color: #ac3b61;
+  text-align: center;
+  font-size: 43px;
+  font-weight: bolder;
+}
+
+.user-data-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.user-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.data-list {
+  list-style: none;
+}
+
+.list-item {
+  padding: 5px 0px;
+}
+
+.data-label {
+  text-decoration: underline;
+}
+
+.map-container {
+  height: 70vh;
+  width: 100%;
+}
+
 .user-pin-pulse {
   background: rgba(125, 175, 255, 0.2);
   border-radius: 50%;
@@ -50,6 +97,13 @@
   border-radius: 50%;
 }
 
+.pin-name {
+  position: absolute;
+  width: max-content;
+  top: -35px;
+  left: -60px;
+}
+
 @keyframes pulsate {
   0% {
     transform: scale(0.1, 0.1);
@@ -78,5 +132,12 @@
   }
   100% {
     transform: translateY(0) rotate(-45deg);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .user-data-container {
+    flex-direction: column;
+    height: 70vh;
   }
 }

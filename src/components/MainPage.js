@@ -90,7 +90,9 @@ function MainPage({ setUser }) {
                   <StyledTableCell>
                     {user.name.first[0]}. {user.name.last}
                   </StyledTableCell>
-                  <StyledTableCell>{user.email}</StyledTableCell>
+                  <StyledTableCell>
+                    <a href={`mailto: ${user.email}`}>{user.email}</a>
+                  </StyledTableCell>
                   <StyledTableCell>{user.gender}</StyledTableCell>
                   <StyledTableCell>{user.dob.age}</StyledTableCell>
                 </StyledTableRow>
