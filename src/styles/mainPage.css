@@ -8,11 +8,10 @@
   padding: 15px 0px;
   color: #ac3b61;
   text-align: center;
-  font-family: 'Comfortaa', cursive;
   font-size: 43px;
   font-weight: bolder;
 }
 
-img {
+.profile-image {
   border-radius: 50%;
 }

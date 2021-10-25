@@ -46,8 +46,15 @@ function MainPage({ setUser }) {
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
-      backgroundColor: '#eee2dc',
       fontFamily: "'Comfortaa', cursive;",
+    },
+  }));
+
+  const StyledTableRow = styled(TableRow)(() => ({
+    cursor: 'pointer',
+    backgroundColor: '#eee2dc',
+    '&:hover': {
+      backgroundColor: '#bab2b5',
     },
   }));
 
@@ -72,9 +79,13 @@ function MainPage({ setUser }) {
           <TableBody>
             {users?.map((user, key) => {
               return (
-                <TableRow key={key} onClick={() => handleClick(user)}>
+                <StyledTableRow key={key} onClick={() => handleClick(user)}>
                   <StyledTableCell>
-                    <img src={user.picture.thumbnail} alt="profile"></img>
+                    <img
+                      className="profile-image"
+                      src={user.picture.thumbnail}
+                      alt="profile"
+                    ></img>
                   </StyledTableCell>
                   <StyledTableCell>
                     {user.name.first[0]}. {user.name.last}
@@ -82,7 +93,7 @@ function MainPage({ setUser }) {
                   <StyledTableCell>{user.email}</StyledTableCell>
                   <StyledTableCell>{user.gender}</StyledTableCell>
                   <StyledTableCell>{user.dob.age}</StyledTableCell>
-                </TableRow>
+                </StyledTableRow>
               );
             })}
           </TableBody>
