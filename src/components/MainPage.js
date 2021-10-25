@@ -1,15 +1,27 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { TablePagination } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import '../styles/mainPage.css';
 
 function MainPage({ setUser }) {
   const [users, setUsers] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(0);
   const [username, setUsername] = useState('');
 
   useEffect(() => {
     axios
-      .get(`https://randomuser.me/api/?page=${pageNumber}&results=10&seed=abc`)
+      .get(
+        `https://randomuser.me/api/?page=${pageNumber + 1}&results=10&seed=abc`
+      )
       .then((result) => {
         setUsers(result.data.results);
       });
@@ -20,46 +32,70 @@ function MainPage({ setUser }) {
     setUser(userToSet);
   };
 
+  const handlePageChange = (event, newPage) => {
+    setPageNumber(newPage);
+  };
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: '#123c69',
+      color: theme.palette.common.white,
+      fontSize: 16,
+      fontWeight: 'bold',
+      fontFamily: "'Comfortaa', cursive;",
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+      backgroundColor: '#eee2dc',
+      fontFamily: "'Comfortaa', cursive;",
+    },
+  }));
+
   if (username) {
     return <Redirect to={`/${username}`} />;
   }
 
   return (
-    <div>
-      <h1>All users</h1>
-      <table>
-        <tbody>
-          <tr>
-            <th>Picture</th>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Gender</th>
-            <th>Age</th>
-          </tr>
-          {users?.map((user, key) => {
-            return (
-              <tr key={key} onClick={() => handleClick(user)}>
-                <td>
-                  <img src={user.picture.thumbnail} alt="profile"></img>
-                </td>
-                <td>
-                  {user.name.first[0]}. {user.name.last}
-                </td>
-                <td>{user.email}</td>
-                <td>{user.gender}</td>
-                <td>{user.dob.age}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <button
-        onClick={() => pageNumber > 1 && setPageNumber((prev) => prev - 1)}
-      >
-        Previous
-      </button>
-      <div>{pageNumber}</div>
-      <button onClick={() => setPageNumber((prev) => prev + 1)}>Next</button>
+    <div id="main-page">
+      <h1 id="main-page-header">All Users</h1>
+      <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Picture</StyledTableCell>
+              <StyledTableCell>Full Name</StyledTableCell>
+              <StyledTableCell>Email</StyledTableCell>
+              <StyledTableCell>Gender</StyledTableCell>
+              <StyledTableCell>Age</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users?.map((user, key) => {
+              return (
+                <TableRow key={key} onClick={() => handleClick(user)}>
+                  <StyledTableCell>
+                    <img src={user.picture.thumbnail} alt="profile"></img>
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    {user.name.first[0]}. {user.name.last}
+                  </StyledTableCell>
+                  <StyledTableCell>{user.email}</StyledTableCell>
+                  <StyledTableCell>{user.gender}</StyledTableCell>
+                  <StyledTableCell>{user.dob.age}</StyledTableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10]}
+        component="div"
+        rowsPerPage={10}
+        page={pageNumber}
+        count={100}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }
