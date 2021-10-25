@@ -136,6 +136,13 @@
 }
 
 @media only screen and (max-width: 768px) {
+  .user-page {
+    display: flex;
+    flex-direction: column;
+  }
+  .map-container {
+    max-height: 40vh;
+  }
   .user-data-container {
     flex-direction: column;
     height: 70vh;
